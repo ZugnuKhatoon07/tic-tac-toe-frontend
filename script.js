@@ -87,69 +87,56 @@
 // }
 
 
-// document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-//   const socket = io("https://tic-tac-toe-backend-69kg.onrender.com");
+  const socket = io("https://tic-tac-toe-backend-69kg.onrender.com");
 
-//   const boardDiv = document.getElementById("board");
-//   const turnText = document.getElementById("turn");
+  const boardDiv = document.getElementById("board");
+  const turnText = document.getElementById("turn");
 
-//   let cells = [];
-//   let myPlayer = "";
-//   let currentTurn = "X";
+  let cells = [];
+  let myPlayer = "";
+  let currentTurn = "X";
 
-//   const room = prompt("Room code daalo (same dono log):");
+  const room = prompt("Room code daalo (same dono log):");
 
-//   socket.emit("join", { room });
+  socket.emit("join", { room });
 
-//   // 🧩 BOARD CREATE
-//   for (let i = 0; i < 9; i++) {
-//     const cell = document.createElement("div");
-//     cell.className = "cell";
+  // 🧩 BOARD CREATE
+  for (let i = 0; i < 9; i++) {
+    const cell = document.createElement("div");
+    cell.className = "cell";
 
-//     cell.onclick = () => {
-//       if (cell.innerText !== "" || currentTurn !== myPlayer) return;
+    cell.onclick = () => {
+      if (cell.innerText !== "" || currentTurn !== myPlayer) return;
 
-//       socket.emit("move", {
-//         room,
-//         index: i,
-//         player: myPlayer
-//       });
-//     };
+      socket.emit("move", {
+        room,
+        index: i,
+        player: myPlayer
+      });
+    };
 
-//     boardDiv.appendChild(cell);
-//     cells.push(cell);
-//   }
+    boardDiv.appendChild(cell);
+    cells.push(cell);
+  }
 
-//   // 🎭 Player assign
-//   socket.on("player", (p) => {
-//     myPlayer = p;
-//     turnText.innerText = `You are ${myPlayer}`;
-//   });
+  // 🎭 Player assign
+  socket.on("player", (p) => {
+    myPlayer = p;
+    turnText.innerText = `You are ${myPlayer}`;
+  });
 
-//   // 🔁 REAL-TIME MOVE SYNC
-//   socket.on("move", ({ index, player }) => {
-//   alert("Move received: " + player); // 🔥 TEST
-//   cells[index].innerText = player;
-// });
-
-
-// });
+  // 🔁 REAL-TIME MOVE SYNC
+  socket.on("move", ({ index, player }) => {
+  alert("Move received: " + player); // 🔥 TEST
+  cells[index].innerText = player;
+});
 
 
+});
 
-alert("JS LOADED");
 
-const board = document.getElementById("board");
 
-for (let i = 0; i < 9; i++) {
-  const cell = document.createElement("div");
-  cell.className = "cell";
 
-  cell.onclick = () => {
-    cell.innerText = "X";
-  };
-
-  board.appendChild(cell);
-}
 

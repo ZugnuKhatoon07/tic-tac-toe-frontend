@@ -1,4 +1,4 @@
-body {
+/* body {
     background: linear-gradient(to right, #ff512f, #dd2476);
     font-family: Arial;
     text-align: center;
@@ -19,7 +19,7 @@ h1 {
     width: max-content;
 }
 
-/* 🔥 IMPORTANT FIX */
+
 .cell {
   width: 80px;
   height: 80px;
@@ -28,9 +28,9 @@ h1 {
   align-items: center;
   justify-content: center;
 
-  font-size: 40px;        /* 🔥 MUST */
-  font-weight: bold;     /* 🔥 MUST */
-  color: black;          /* 🔥 MUST */
+  font-size: 40px;       
+  font-weight: bold;     
+  color: black;          
 
   border-radius: 10px;
   cursor: pointer;
@@ -41,11 +41,11 @@ h1 {
 }
 
 .cell.x {
-    color: #0984e3;            /* Blue X */
+    color: #0984e3;           
 }
 
 .cell.o {
-    color: #d63031;            /* Red O */
+    color: #d63031;           
 }
 
 .options {
@@ -68,7 +68,6 @@ h1 {
     background: #81ecec;
 }
 
-/* 🌙 DARK MODE FIX */
 .dark {
     background: linear-gradient(to right, #2c3e50, #000000);
 }
@@ -83,3 +82,26 @@ h1 {
   visibility: visible !important;
   opacity: 1 !important;
 }
+  */
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 10px;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  background: white;
+  color: black;
+  font-size: 40px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid black;
+}
+

@@ -87,7 +87,9 @@
 // }
 
 
-document.addEventListener("DOMContentLoaded", () => {
+// document.addEventListener("DOMContentLoaded", () => {
+
+ document.addEventListener("DOMContentLoaded", () => {
 
   const socket = io("https://tic-tac-toe-backend-69kg.onrender.com");
 

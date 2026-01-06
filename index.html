@@ -1,27 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tic Tac Toe Ludo Style</title>
-    <link rel="stylesheet" href="./style.css">
-    
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
 <h1>🎲 Tic Tac Toe 🎮</h1>
-<h3 id="turn"></h3>
+<h3 id="turnText">Waiting for player...</h3>
+
 <div class="options">
-    <button onclick="restartGame()">🔄 Restart</button>
-    <button onclick="changeTheme()">🎨 Theme</button>
-    <button onclick="toggleSound()">🔊 Sound</button>
+  <button onclick="restartGame()">🔄 Restart</button>
+  <button onclick="changeTheme()">🎨 Theme</button>
+  <button onclick="toggleSound()">🔊 Sound</button>
 </div>
 
-
 <div id="board"></div>
-<p id="turn"></p>
 
 <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-
-
 <script src="./script.js"></script>
 </body>
 </html>

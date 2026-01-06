@@ -91,14 +91,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const socket = io("https://tic-tac-toe-backend-69kg.onrender.com");
 
-  const boardDiv = document.getElementById("board");
+  const board = document.getElementById("board");
   const turnText = document.getElementById("turn");
 
   let cells = [];
-  let myPlayer = "";
-  let currentTurn = "X";
-
-  const room = prompt("Room code daalo (same dono log):");
+  let room = prompt("Room code daalo (same dono log):");
 
   socket.emit("join", { room });
 
@@ -108,35 +105,29 @@ document.addEventListener("DOMContentLoaded", () => {
     cell.className = "cell";
 
     cell.onclick = () => {
-      if (cell.innerText !== "" || currentTurn !== myPlayer) return;
-
       socket.emit("move", {
         room,
-        index: i,
-        player: myPlayer
+        index: i
       });
     };
 
-    boardDiv.appendChild(cell);
+    board.appendChild(cell);
     cells.push(cell);
   }
 
-  // 🎭 Player assign
-  socket.on("player", (p) => {
-    myPlayer = p;
-    turnText.innerText = `You are ${myPlayer}`;
+  // 🔁 BACKEND SE UPDATE RECEIVE
+  socket.on("update", (data) => {
+    const { board, player } = data;
+
+    for (let i = 0; i < 9; i++) {
+      cells[i].innerText = board[i];
+      cells[i].className = "cell";
+
+      if (board[i] === "X") cells[i].classList.add("x");
+      if (board[i] === "O") cells[i].classList.add("o");
+    }
+
+    turnText.innerText = `Player ${player} Turn`;
   });
 
-  // 🔁 REAL-TIME MOVE SYNC
-  socket.on("move", ({ index, player }) => {
-  alert("Move received: " + player); // 🔥 TEST
-  cells[index].innerText = player;
 });
-
-
-});
-
-
-
-
-

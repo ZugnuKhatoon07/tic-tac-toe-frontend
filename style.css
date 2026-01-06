@@ -10,12 +10,12 @@ h1 {
     font-size: 40px;
 }
 
-.board {
-    width: 320px;
-    margin: 30px auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+#board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 10px;
+  margin: 30px auto;
 }
 
 .cell {

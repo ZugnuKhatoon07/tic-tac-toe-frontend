@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const socket = io("https://tic-tac-toe-backend-69kg.onrender.com");
 
   const boardDiv = document.getElementById("board");
-  const turnText = document.getElementById("turnText");
+  const turnText = document.getElementById("turn");
 
   let cells = [];
   let myPlayer = "";
@@ -129,11 +129,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🔁 REAL-TIME MOVE SYNC
   socket.on("move", ({ index, player }) => {
-    cells[index].innerText = player;
-    cells[index].classList.add(player.toLowerCase());
+  alert("Move received: " + player); // 🔥 TEST
+  cells[index].innerText = player;
+});
 
-    currentTurn = player === "X" ? "O" : "X";
-    turnText.innerText = `Player ${currentTurn} Turn`;
-  });
 
 });

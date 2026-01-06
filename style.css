@@ -21,20 +21,19 @@ h1 {
 
 /* 🔥 IMPORTANT FIX */
 .cell {
-    width: 100px;
-    height: 100px;
-    background: white;
-    border-radius: 10px;
-    font-size: 42px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+  width: 100px;
+  height: 100px;
+  background: white;
+  border-radius: 10px;
+  font-size: 42px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 
-    color: black;              /* ✅ TEXT NOW VISIBLE */
-    user-select: none;
-}
+  color: black !important;   /* 🔥 MOST IMPORTANT LINE */
+}`
 
 .cell:hover {
     background: #ffeaa7;

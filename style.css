@@ -33,7 +33,7 @@ h1 {
   cursor: pointer;
 
   color: black !important;   /* 🔥 MOST IMPORTANT LINE */
-}`
+}
 
 .cell:hover {
     background: #ffeaa7;

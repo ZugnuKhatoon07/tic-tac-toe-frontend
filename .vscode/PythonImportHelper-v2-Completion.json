@@ -1,0 +1,88 @@
+[
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "SocketIO",
+        "importPath": "flask_socketio",
+        "description": "flask_socketio",
+        "isExtraImport": true,
+        "detail": "flask_socketio",
+        "documentation": {}
+    },
+    {
+        "label": "emit",
+        "importPath": "flask_socketio",
+        "description": "flask_socketio",
+        "isExtraImport": true,
+        "detail": "flask_socketio",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def index():\n    return render_template(\"index.html\")\n@socketio.on(\"move\")\ndef handle_move(data):\n    global current_player\n    i = data[\"index\"]\n    if board[i] == \"\":\n        board[i] = current_player\n        emit(\"update\", {\n            \"board\": board,",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "handle_move",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def handle_move(data):\n    global current_player\n    i = data[\"index\"]\n    if board[i] == \"\":\n        board[i] = current_player\n        emit(\"update\", {\n            \"board\": board,\n            \"player\": current_player\n        }, broadcast=True)\n        current_player = \"O\" if current_player == \"X\" else \"X\"",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = Flask(__name__)\nsocketio = SocketIO(app)\nboard = [\"\"] * 9\ncurrent_player = \"X\"\n@app.route(\"/\")\ndef index():\n    return render_template(\"index.html\")\n@socketio.on(\"move\")\ndef handle_move(data):\n    global current_player",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "socketio",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "socketio = SocketIO(app)\nboard = [\"\"] * 9\ncurrent_player = \"X\"\n@app.route(\"/\")\ndef index():\n    return render_template(\"index.html\")\n@socketio.on(\"move\")\ndef handle_move(data):\n    global current_player\n    i = data[\"index\"]",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "board",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "board = [\"\"] * 9\ncurrent_player = \"X\"\n@app.route(\"/\")\ndef index():\n    return render_template(\"index.html\")\n@socketio.on(\"move\")\ndef handle_move(data):\n    global current_player\n    i = data[\"index\"]\n    if board[i] == \"\":",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "current_player",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "current_player = \"X\"\n@app.route(\"/\")\ndef index():\n    return render_template(\"index.html\")\n@socketio.on(\"move\")\ndef handle_move(data):\n    global current_player\n    i = data[\"index\"]\n    if board[i] == \"\":\n        board[i] = current_player",
+        "detail": "app",
+        "documentation": {}
+    }
+]

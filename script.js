@@ -95,54 +95,48 @@ document.addEventListener("DOMContentLoaded", () => {
   const turnText = document.getElementById("turn");
 
   let cells = [];
-  let soundOn = true;
+  let myPlayer = "";
+  let currentTurn = "X";
 
-  // 🔑 ROOM & PLAYER (AB PROMPT AAYEGA)
-  const room = prompt("Room code daalo (same dono log likhen):");
+  const room = prompt("Room code daalo (same dono log):");
 
-  let player = prompt("X ya O likho:").toUpperCase();
-  if (player !== "X" && player !== "O") {
-    alert("Sirf X ya O allowed hai");
-    location.reload();
-    return;
-  }
+  socket.emit("join", room);
 
-  turnText.innerText = `Player ${player} Turn`;
-
-  socket.emit("join", { room, player });
-
-  // 🧩 BOARD CREATE
+  // 🧩 BOARD
   for (let i = 0; i < 9; i++) {
-    const div = document.createElement("div");
-    div.className = "cell";
+    const cell = document.createElement("div");
+    cell.className = "cell";
 
-    div.onclick = () => {
-      if (div.innerText) return;
+    cell.onclick = () => {
+      if (
+        cell.innerText !== "" ||
+        currentTurn !== myPlayer
+      ) return;
 
-      // ✅ Apne phone me turant likho
-      div.innerText = player;
-      div.classList.add(player.toLowerCase());
-
-      // 🔁 Dusre phone ko bhejo
       socket.emit("move", {
-        room: room,
-        index: i,
-        player: player
+        room,
+        index: i
       });
     };
 
-    boardDiv.appendChild(div);
-    cells.push(div);
+    boardDiv.appendChild(cell);
+    cells.push(cell);
   }
 
-  // 📥 Dusre player ka move receive
-  socket.on("move", (data) => {
-    const { index, player } = data;
+  // 🎭 Player assign (server se)
+  socket.on("player", (p) => {
+    myPlayer = p;
+    turnText.innerText = `You are ${myPlayer}`;
+  });
 
-    if (!cells[index].innerText) {
-      cells[index].innerText = player;
-      cells[index].classList.add(player.toLowerCase());
-    }
+  // 🔁 Move receive (REAL SYNC)
+  socket.on("move", ({ index, player }) => {
+    cells[index].innerText = player;
+    cells[index].classList.add(player.toLowerCase());
+
+    currentTurn = player === "X" ? "O" : "X";
+    turnText.innerText = `Player ${currentTurn} Turn`;
   });
 
 });
+

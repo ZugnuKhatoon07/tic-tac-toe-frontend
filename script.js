@@ -89,31 +89,60 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
+  const socket = io("https://tic-tac-toe-backend-69kg.onrender.com");
+
   const boardDiv = document.getElementById("board");
   const turnText = document.getElementById("turn");
 
-  let currentPlayer = "X";
   let cells = [];
+  let soundOn = true;
 
-  turnText.innerText = "Player X Turn";
+  // 🔑 ROOM & PLAYER (AB PROMPT AAYEGA)
+  const room = prompt("Room code daalo (same dono log likhen):");
+
+  let player = prompt("X ya O likho:").toUpperCase();
+  if (player !== "X" && player !== "O") {
+    alert("Sirf X ya O allowed hai");
+    location.reload();
+    return;
+  }
+
+  turnText.innerText = `Player ${player} Turn`;
+
+  socket.emit("join", { room, player });
 
   // 🧩 BOARD CREATE
   for (let i = 0; i < 9; i++) {
     const div = document.createElement("div");
     div.className = "cell";
 
-    div.addEventListener("click", () => {
-      if (div.innerText !== "") return;
+    div.onclick = () => {
+      if (div.innerText) return;
 
-      div.innerText = currentPlayer;
-      div.classList.add(currentPlayer.toLowerCase());
+      // ✅ Apne phone me turant likho
+      div.innerText = player;
+      div.classList.add(player.toLowerCase());
 
-      currentPlayer = currentPlayer === "X" ? "O" : "X";
-      turnText.innerText = `Player ${currentPlayer} Turn`;
-    });
+      // 🔁 Dusre phone ko bhejo
+      socket.emit("move", {
+        room: room,
+        index: i,
+        player: player
+      });
+    };
 
     boardDiv.appendChild(div);
     cells.push(div);
   }
+
+  // 📥 Dusre player ka move receive
+  socket.on("move", (data) => {
+    const { index, player } = data;
+
+    if (!cells[index].innerText) {
+      cells[index].innerText = player;
+      cells[index].classList.add(player.toLowerCase());
+    }
+  });
 
 });

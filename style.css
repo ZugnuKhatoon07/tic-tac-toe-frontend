@@ -21,29 +21,30 @@ h1 {
 
 /* 🔥 IMPORTANT FIX */
 .cell {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   background: white;
-  border-radius: 10px;
-  font-size: 42px;
-  font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 
-  color: black !important;   /* 🔥 MOST IMPORTANT LINE */
+  font-size: 40px;        /* 🔥 MUST */
+  font-weight: bold;     /* 🔥 MUST */
+  color: black;          /* 🔥 MUST */
+
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .cell:hover {
     background: #ffeaa7;
 }
 
-.x {
+.cell.x {
     color: #0984e3;            /* Blue X */
 }
 
-.o {
+.cell.o {
     color: #d63031;            /* Red O */
 }
 

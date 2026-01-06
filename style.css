@@ -13,25 +13,23 @@ h1 {
 #board {
   display: grid;
   grid-template-columns: repeat(3, 100px);
-  grid-template-rows: repeat(3, 100px);
-  gap: 10px;
+  gap: 12px;
   margin: 30px auto;
+  width: max-content;
 }
 
 .cell {
-    width: 100px;
-    height: 100px;
-    background: white;
-    color: black;
-    font-size: 40px;
-    font-weight: bold;
-    border-radius: 15px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100px;
+  height: 100px;
+  background: white;
+  border-radius: 10px;
+  font-size: 42px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
-
 .cell:hover {
     background: #ffeaa7;
 }

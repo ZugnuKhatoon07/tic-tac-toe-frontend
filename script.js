@@ -4,7 +4,7 @@
 
 // const socket = io("https://tic-tac-toe-backend-69kg.onrender.com");
 
-// const boardDiv = document.getElementById("board");
+// //const boardDiv = document.getElementById("board");
 // const turnText = document.getElementById("turn");
 
 // let cells = [];
@@ -136,6 +136,9 @@
 
 // });
 
+
+
+alert("JS LOADED");
 
 const board = document.getElementById("board");
 

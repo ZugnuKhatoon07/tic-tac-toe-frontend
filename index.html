@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
   <title>Tic Tac Toe</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
 
@@ -21,7 +21,36 @@
 <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🎲 Tic Tac Toe 🎮</h1>
+<h3 id="turn">Waiting for player...</h3>
+
+<div class="options">
+  <button onclick="restartGame()">🔄 Restart</button>
+  <button onclick="changeTheme()">🎨 Theme</button>
+  <button onclick="toggleSound()">🔊 Sound</button>
+</div>
+
+<div id="board"></div>
+
+<!-- 🔥 FIRST socket.io -->
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+<!-- 🔥 THEN your JS -->
+<script src="script.js"></script>
+
+</body>
 </html>
+
 
 
 

@@ -1,83 +1,119 @@
-const socket = io("https://tic-tac-toe-backend-69kg.onrender.com");
+// alert("JS LOADED");
+// const boardDiv = document.getElementById("board");
+// console.log("BOARD:", boardDiv);
 
-const boardDiv = document.getElementById("board");
-const turnText = document.getElementById("turn");
+// const socket = io("https://tic-tac-toe-backend-69kg.onrender.com");
 
-let cells = [];
-let soundOn = true;
+// const boardDiv = document.getElementById("board");
+// const turnText = document.getElementById("turn");
 
-const clickSound = new Audio(
-  "https://www.soundjay.com/buttons/sounds/button-16.mp3"
-);
+// let cells = [];
+// let soundOn = true;
 
-const room = prompt("Room code daalo:");
+// const clickSound = new Audio(
+//   "https://www.soundjay.com/buttons/sounds/button-16.mp3"
+// );
 
-let player = prompt("X ya O likho:").toUpperCase();
-if (player !== "X" && player !== "O") {
-  alert("Sirf X ya O allowed");
-  location.reload();
-}
+// const room = prompt("Room code daalo:");
 
-turnText.innerText = `Player ${player} Turn`;
+// let player = prompt("X ya O likho:").toUpperCase();
+// if (player !== "X" && player !== "O") {
+//   alert("Sirf X ya O allowed");
+//   location.reload();
+// }
 
-socket.emit("join", { room, player });
+// turnText.innerText = `Player ${player} Turn`;
 
-// 🧩 BOARD CREATE (🔥 FIXED)
-for (let i = 0; i < 9; i++) {
-  const div = document.createElement("div");
-  div.className = "cell";
+// socket.emit("join", { room, player });
 
-  div.onclick = () => {
-    if (div.innerText) return;
+// // 🧩 BOARD CREATE (🔥 FIXED)
+// for (let i = 0; i < 9; i++) {
+//   const div = document.createElement("div");
+//   div.className = "cell";
 
-    if (soundOn) clickSound.play();
+//   div.onclick = () => {
+//     if (div.innerText) return;
 
-    // 🔥 LOCAL WRITE (IMPORTANT)
-    div.innerText = player;
-    div.classList.add(player.toLowerCase());
+//     if (soundOn) clickSound.play();
 
-    // 🔁 send to other player
-    socket.emit("move", { room, index: i, player });
+//     // 🔥 LOCAL WRITE (IMPORTANT)
+//     div.innerText = player;
+//     div.classList.add(player.toLowerCase());
 
-    // 🔄 switch turn (optional)
-    turnText.innerText =
-      player === "X" ? "Player O Turn" : "Player X Turn";
-  };
+//     // 🔁 send to other player
+//     socket.emit("move", { room, index: i, player });
 
-  boardDiv.appendChild(div);
-  cells.push(div);
-}
+//     // 🔄 switch turn (optional)
+//     turnText.innerText =
+//       player === "X" ? "Player O Turn" : "Player X Turn";
+//   };
 
-// 🔁 RECEIVE OTHER PLAYER MOVE
-socket.on("move", (data) => {
-  const { index, player } = data;
+//   boardDiv.appendChild(div);
+//   cells.push(div);
+// }
 
-  if (!cells[index].innerText) {
-    cells[index].innerText = player;
-    cells[index].classList.add(player.toLowerCase());
+// // 🔁 RECEIVE OTHER PLAYER MOVE
+// socket.on("move", (data) => {
+//   const { index, player } = data;
+
+//   if (!cells[index].innerText) {
+//     cells[index].innerText = player;
+//     cells[index].classList.add(player.toLowerCase());
+//   }
+// });
+
+// // 🔄 Restart
+// function restartGame() {
+//   socket.emit("restart", { room });
+// }
+
+// socket.on("restart", () => {
+//   cells.forEach(c => {
+//     c.innerText = "";
+//     c.classList.remove("x", "o");
+//   });
+//   turnText.innerText = "Game Restarted";
+// });
+
+// // 🎨 Theme
+// function changeTheme() {
+//   document.body.classList.toggle("dark");
+// }
+
+// // 🔊 Sound
+// function toggleSound() {
+//   soundOn = !soundOn;
+//   alert(soundOn ? "Sound ON 🔊" : "Sound OFF 🔕");
+// }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const boardDiv = document.getElementById("board");
+  const turnText = document.getElementById("turn");
+
+  let currentPlayer = "X";
+  let cells = [];
+
+  turnText.innerText = "Player X Turn";
+
+  // 🧩 BOARD CREATE
+  for (let i = 0; i < 9; i++) {
+    const div = document.createElement("div");
+    div.className = "cell";
+
+    div.addEventListener("click", () => {
+      if (div.innerText !== "") return;
+
+      div.innerText = currentPlayer;
+      div.classList.add(currentPlayer.toLowerCase());
+
+      currentPlayer = currentPlayer === "X" ? "O" : "X";
+      turnText.innerText = `Player ${currentPlayer} Turn`;
+    });
+
+    boardDiv.appendChild(div);
+    cells.push(div);
   }
+
 });
-
-// 🔄 Restart
-function restartGame() {
-  socket.emit("restart", { room });
-}
-
-socket.on("restart", () => {
-  cells.forEach(c => {
-    c.innerText = "";
-    c.classList.remove("x", "o");
-  });
-  turnText.innerText = "Game Restarted";
-});
-
-// 🎨 Theme
-function changeTheme() {
-  document.body.classList.toggle("dark");
-}
-
-// 🔊 Sound
-function toggleSound() {
-  soundOn = !soundOn;
-  alert(soundOn ? "Sound ON 🔊" : "Sound OFF 🔕");
-}

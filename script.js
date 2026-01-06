@@ -10,29 +10,45 @@ const clickSound = new Audio(
   "https://www.soundjay.com/buttons/sounds/button-16.mp3"
 );
 
-// 🔑 ROOM & PLAYER
-const room = prompt("Room code daalo (same dono log use kare):");
-const player = prompt("X ya O likho:");
+const room = prompt("Room code daalo:");
+
+let player = prompt("X ya O likho:").toUpperCase();
+if (player !== "X" && player !== "O") {
+  alert("Sirf X ya O allowed");
+  location.reload();
+}
+
+turnText.innerText = `Player ${player} Turn`;
 
 socket.emit("join", { room, player });
 
-// 🧩 BOARD CREATE
+// 🧩 BOARD CREATE (🔥 FIXED)
 for (let i = 0; i < 9; i++) {
-  let div = document.createElement("div");
-  div.classList.add("cell");
+  const div = document.createElement("div");
+  div.className = "cell";
+
   div.onclick = () => {
+    if (div.innerText) return;
+
     if (soundOn) clickSound.play();
-    socket.emit("move", {
-      room: room,
-      index: i,
-      player: player
-    });
+
+    // 🔥 LOCAL WRITE (IMPORTANT)
+    div.innerText = player;
+    div.classList.add(player.toLowerCase());
+
+    // 🔁 send to other player
+    socket.emit("move", { room, index: i, player });
+
+    // 🔄 switch turn (optional)
+    turnText.innerText =
+      player === "X" ? "Player O Turn" : "Player X Turn";
   };
+
   boardDiv.appendChild(div);
   cells.push(div);
 }
 
-// 🔁 UPDATE BOARD
+// 🔁 RECEIVE OTHER PLAYER MOVE
 socket.on("move", (data) => {
   const { index, player } = data;
 
@@ -47,9 +63,11 @@ function restartGame() {
   socket.emit("restart", { room });
 }
 
-// 🔄 Restart response
 socket.on("restart", () => {
-  cells.forEach(c => (c.innerText = ""));
+  cells.forEach(c => {
+    c.innerText = "";
+    c.classList.remove("x", "o");
+  });
   turnText.innerText = "Game Restarted";
 });
 
@@ -63,7 +81,3 @@ function toggleSound() {
   soundOn = !soundOn;
   alert(soundOn ? "Sound ON 🔊" : "Sound OFF 🔕");
 }
-
-
-
-//const socket = io("https://tic-tac-toe-backend-69kg.onrender.com"); 

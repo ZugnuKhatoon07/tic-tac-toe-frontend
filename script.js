@@ -33,12 +33,13 @@ for (let i = 0; i < 9; i++) {
 }
 
 // 🔁 UPDATE BOARD
-socket.on("move", data => {
-  data.board.forEach((val, i) => {
-    cells[i].innerText = val;
-    cells[i].className = "cell " + (val === "X" ? "x" : "o");
-  });
-  turnText.innerText = "Player " + data.turn + " Turn";
+socket.on("move", (data) => {
+  const { index, player } = data;
+
+  if (!cells[index].innerText) {
+    cells[index].innerText = player;
+    cells[index].classList.add(player.toLowerCase());
+  }
 });
 
 // 🔄 Restart

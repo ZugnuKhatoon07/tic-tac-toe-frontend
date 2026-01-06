@@ -3,6 +3,7 @@ body {
     font-family: Arial;
     text-align: center;
     color: white;
+    margin: 0;
 }
 
 h1 {
@@ -11,35 +12,40 @@ h1 {
 }
 
 #board {
-  display: grid;
-  grid-template-columns: repeat(3, 100px);
-  gap: 12px;
-  margin: 30px auto;
-  width: max-content;
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 12px;
+    margin: 30px auto;
+    width: max-content;
 }
 
+/* 🔥 IMPORTANT FIX */
 .cell {
-  width: 100px;
-  height: 100px;
-  background: white;
-  border-radius: 10px;
-  font-size: 42px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+    width: 100px;
+    height: 100px;
+    background: white;
+    border-radius: 10px;
+    font-size: 42px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    color: black;              /* ✅ TEXT NOW VISIBLE */
+    user-select: none;
 }
+
 .cell:hover {
     background: #ffeaa7;
 }
 
 .x {
-    color: #0984e3;
+    color: #0984e3;            /* Blue X */
 }
 
 .o {
-    color: #d63031;
+    color: #d63031;            /* Red O */
 }
 
 .options {
@@ -62,6 +68,12 @@ h1 {
     background: #81ecec;
 }
 
+/* 🌙 DARK MODE FIX */
 .dark {
     background: linear-gradient(to right, #2c3e50, #000000);
+}
+
+.dark .cell {
+    background: #ecf0f1;
+    color: black;
 }

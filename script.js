@@ -88,19 +88,27 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const socket = io("https://tic-tac-toe-backend-69kg.onrender.com");
+  const socket = io("https://tic-tac-toe-backend-69kg.onrender.com", {
+    transports: ["websocket"]
+  });
+
   const boardDiv = document.getElementById("board");
   const turnText = document.getElementById("turn");
 
   let cells = [];
-  let room = prompt("Enter Room Code (same on both devices):");
+  let room = prompt("Room code same daalo (2 players):");
 
   socket.emit("join", { room });
 
-  // Board create
+  // 🔊 DEBUG
+  socket.on("connect", () => {
+    console.log("Connected:", socket.id);
+  });
+
+  // 🧩 BOARD CREATE
   for (let i = 0; i < 9; i++) {
     const cell = document.createElement("div");
-    cell.className = "cell";
+    cell.classList.add("cell");
 
     cell.onclick = () => {
       socket.emit("move", {
@@ -113,15 +121,12 @@ document.addEventListener("DOMContentLoaded", () => {
     cells.push(cell);
   }
 
-  // 🔁 FULL BOARD UPDATE (MOST IMPORTANT)
+  // 🔁 UPDATE FROM SERVER (🔥 MAIN FIX)
   socket.on("update", (data) => {
-
-    data.board.forEach((value, index) => {
-      cells[index].innerText = value;
-      cells[index].classList.remove("x", "o");
-
-      if (value === "X") cells[index].classList.add("x");
-      if (value === "O") cells[index].classList.add("o");
+    data.board.forEach((value, i) => {
+      cells[i].innerText = value;
+      cells[i].className = "cell";
+      if (value) cells[i].classList.add(value.toLowerCase());
     });
 
     turnText.innerText = `Turn: ${data.player}`;
@@ -129,9 +134,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-// BUTTON FUNCTIONS (ERROR FIX)
+// 🎮 BUTTON FUNCTIONS (ERROR FIX)
 function restartGame() {
-  location.reload();
+  socket.emit("restart", { room });
 }
 
 function changeTheme() {
@@ -139,5 +144,5 @@ function changeTheme() {
 }
 
 function toggleSound() {
-  alert("Sound feature later 🙂");
+  alert("Sound toggle (optional)");
 }
